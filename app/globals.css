@@ -1,0 +1,164 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --bg-global: #f9f9f8;
+  --text-primary: #1a1c19;
+  --bg-container: #f1f0ec;
+  --state-hover: #e5e3dc;
+  --media-blank: #ebeae4;
+  --text-inverse: #141514;
+  --accent-gold-queen: #d4c4a8;
+  --accent-silver-meta: #a3a8a3;
+  --accent-glow: transparent;
+  --background: var(--bg-global);
+  --foreground: var(--text-primary);
+  --card: var(--bg-container);
+  --card-foreground: var(--text-primary);
+  --popover: var(--bg-container);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--text-primary);
+  --primary-foreground: var(--bg-global);
+  --secondary: var(--state-hover);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--media-blank);
+  --muted-foreground: #686c67;
+  --accent: var(--accent-gold-queen);
+  --accent-foreground: var(--text-inverse);
+  --accent-silver: var(--accent-silver-meta);
+  --destructive: #9f4d42;
+  --destructive-foreground: var(--text-inverse);
+  --border: #d7d7d1;
+  --input: var(--state-hover);
+  --ring: var(--accent-gold-queen);
+  --radius: 4px;
+  --transition-smooth: background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-global: #141514;
+    --text-primary: #ebeae6;
+    --bg-container: #1f211f;
+    --state-hover: #2c2f2b;
+    --media-blank: #242623;
+    --text-inverse: #141514;
+    --border: #3b3e39;
+    --muted-foreground: #a3a8a3;
+    /* richer, more distinctly golden in the dark: the flat daylight tan reads muddy against ink */
+    --accent-gold-queen: #c9a35f;
+    --accent-glow: rgba(201, 163, 95, 0.4);
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-sans), Arial, sans-serif;
+  --font-serif: var(--font-serif), Georgia, serif;
+  --font-mono: "DM Mono", monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-silver: var(--accent-silver);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { scroll-behavior: smooth; background-color: var(--bg-global); }
+  body {
+    @apply bg-background text-foreground;
+    margin: 0;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    transition: var(--transition-smooth);
+  }
+}
+
+.editorial-container {
+  background-color: var(--bg-container);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  transition: var(--transition-smooth);
+}
+
+.interactive-surface {
+  background-color: transparent;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.interactive-surface:hover { background-color: var(--state-hover); }
+
+.btn-luxury-primary {
+  background-color: var(--accent-gold-queen);
+  border: 0;
+  border-radius: var(--radius);
+  color: var(--text-inverse);
+  cursor: pointer;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  padding: 1rem 2.5rem;
+  text-transform: uppercase;
+  transition: opacity 0.25s ease;
+}
+
+.btn-luxury-primary:hover { opacity: 0.85; }
+
+.media-canvas-frame {
+  background-color: var(--media-blank);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+::selection { background: var(--accent-gold-queen); color: var(--text-inverse); }
+
+/* subtle gold glow: invisible in light mode (--accent-glow is transparent),
+   lets gold speak on its own against the dark theme's ink background */
+.btn-glow {
+  transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.25s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 0 28px 2px var(--accent-glow);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-up { animation: fade-up 0.6s cubic-bezier(0.25, 1, 0.5, 1) both; }
+.animate-fade-in { animation: fade-in 0.8s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
